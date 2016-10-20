@@ -5,8 +5,9 @@ import os
 from os import listdir
 from os.path import isfile, join
 import re
-
+from os.path import expanduser
 currentMusicFile = None
+
 def playMusic(filename, volume=0.8):
     freq = 44100
     bitsize = 16
@@ -16,7 +17,8 @@ def playMusic(filename, volume=0.8):
     pg.mixer.music.set_volume(volume)
     clock = pg.time.Clock()
     try:
-        foundMusicFile = findFile(filename, '/home/roscon/Music')
+        home = expanduser("~")
+        foundMusicFile = findFile(filename, home+'/Music')
         print 'Found Music File: ', foundMusicFile
         #print 'Guns: ', foundMusicFile['Guns']
         #if any(filename in string for string in foundMusicFile):
@@ -26,7 +28,7 @@ def playMusic(filename, volume=0.8):
         if foundMusicFile == None:
             print 'could not find the requested file'
             return
-        pg.mixer.music.load('/home/roscon/Music/'+foundMusicFile)
+        pg.mixer.music.load(home+'/Music/'+foundMusicFile)
         print 'Music file {} loaded', format(foundMusicFile)
         global currentMusicFile
         currentMusicFile= foundMusicFile
