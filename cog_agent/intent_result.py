@@ -9,6 +9,7 @@ class IntentResult:
         self.Action = resultObject.get('action', 'no_action')
         self.MetaData = self.Result.get('metadata', 'no_meta_data')
         self.IntentName = self.MetaData.get('intentName', 'no_intent_name')
+        self.Fulfillment = self.Result.get('fulfillment')
 
     # self.Action = resultObject['action']
     # self.Parameters = resultObject['parameters']
@@ -27,3 +28,5 @@ class IntentResult:
 
     def getIntentName(self):
         return self.IntentName
+    def getResultFulfillment(self):
+        return self.Fulfillment

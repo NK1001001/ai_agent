@@ -28,7 +28,7 @@ def main():
 
    # request.query = "who is albert einstein?"
 #Who was Albert Einstein?
-    request.query = "play sia"
+    request.query = "who are you?"
     response = request.getresponse()
     intent = Intent(response.read())
     #intent.createIntentFromJson(response.read())
