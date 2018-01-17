@@ -3,6 +3,7 @@
 
 import os.path
 import sys
+import argparse
 
 from intent import Intent
 import json
@@ -14,11 +15,17 @@ except ImportError:
     )
     import apiai
 
-CLIENT_ACCESS_TOKEN = 'b4356a5564ff459b856f1554ccf0da2f'
+CLIENT_ACCESS_TOKEN = ''
 
 
 def main():
-    ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
+    parser = argparse.ArgumentParser("cog agent - ")
+    parser.add_argument('-text', '--text_to_query', help='The text to send')
+    parser.add_argument('-token', '--auth_token', help='The token to authenticate on Dialogflow')
+
+    ai = apiai.ApiAI(parser.auth_token)
+
+    argparser = argparse.ArgumentParser()
 
     request = ai.text_request()
 

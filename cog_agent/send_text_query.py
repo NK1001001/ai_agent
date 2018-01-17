@@ -3,7 +3,7 @@
 
 import os.path
 import sys
-
+import argparse
 from intent import Intent
 import json
 try:
@@ -14,11 +14,22 @@ except ImportError:
     )
     import apiai
 
-CLIENT_ACCESS_TOKEN = 'b4356a5564ff459b856f1554ccf0da2f'
-
+""" You can use this program to send any text query.
+Args: -tok: the authentication token taken from your created doamin in Dialogflow website console:
+            https://console.dialogflow.com/api-client/#/login
+            Enter your agent settings on the lest and take the: "Client access token"
+      -text: The text you want to send, for example: "I want pizza"
+"""
 
 def main():
-    ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
+    """
+        Get the token from the Dialogue Flow  WebSite, you should create an account and get it from you the agent
+    """
+    parser = argparse.ArgumentParser("cog agent - ")
+    parser.add_argument('-text', '--text_to_query', help='The text to send', required=True)
+    parser.add_argument('-token', '--auth_token', help='The token to authenticate on Dialogflow', required=True)
+    args = parser.parse_args()
+    ai = apiai.ApiAI(args.auth_token)
 
     request = ai.text_request()
 
@@ -28,11 +39,12 @@ def main():
 
    # request.query = "who is albert einstein?"
 #Who was Albert Einstein?
-    request.query = "play sia"
+    # request.query = "play sia"
+    request.query = args.text_to_query
     response = request.getresponse()
     intent = Intent(response.read())
     #intent.createIntentFromJson(response.read())
-    print ' intent name is: ' ,intent.getIntentName()
+    print ('intent name is: ',intent.getIntentName())
     intent.handleIntent()
 
     #print (response.read())
